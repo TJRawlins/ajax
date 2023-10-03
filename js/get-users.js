@@ -2,17 +2,29 @@ $(() => {
     get_users()
 })
 
+// const get_users = () => {
+//     let http = new XMLHttpRequest();
+//     http.responseType = "json";
+//     http.open("GET", "http://localhost:5555/api/users", true);
+//     // Always pass response data into a function
+//     http.onload = () => {
+//         console.log(http.response);
+//         display(http.response);
+//     }
+//     // Execute the call
+//     http.send();
+// }
+
+// JQUERY
 const get_users = () => {
-    let http = new XMLHttpRequest();
-    http.responseType = "json";
-    http.open("GET", "http://localhost:5555/api/users", true);
-    // Always pass response data into a function
-    http.onload = () => {
-        console.log(http.response);
-        display(http.response);
-    }
-    // Execute the call
-    http.send();
+    $.getJSON("http://localhost:5555/api/users")
+        .done((res) => {
+            console.log(res)
+            display(res)
+        })
+        .fail((err) => {
+            console.error(err);
+        });
 }
 
 const display = (users) => {
@@ -27,11 +39,14 @@ const display = (users) => {
         tr.append( $(`<td>${u.phone}</td>`) );
         tr.append( $(`<td>${u.isReviewer ? "Yes" : "No"}</td>`) );
         tr.append( $(`<td>${u.isAdmin ? "Yes" : "No"}</td>`) );
-        tr.append( $("<td>") );
-        tr.append( $(`<a href='get-user.html?id=${u.id}'>Detail</a> | `) );
-        tr.append( $(`<a href='put-user.html?id=${u.id}'>Edit</a>`) );
-        tr.append( $("</td>") );
-        tr.append( $("</tr>") );
+        let a1 = $(`<a href='get-user.html?id=${u.id}'>Detail</a>`);
+        let a2 = $(`<a href='put-user.html?id=${u.id}'>Edit</a>`);
+        let sep = $("<span> | </span>")
+        let tda = $("<td></td>");
+        tda.append(a1);
+        tda.append(sep)
+        tda.append(a2);
+        tr.append(tda)
         tbody.append(tr);
     }    
 }

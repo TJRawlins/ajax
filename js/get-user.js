@@ -14,18 +14,31 @@ $(() => {
 
 let user = null;
 
+// CONVERTED TO JQUERY - BELOW
+// const get_user = (id) => {
+//     let http = new XMLHttpRequest();
+//     http.responseType = "json";
+//     http.open("GET", `http://localhost:5555/api/users/${id}`, true);
+//     // Always pass response data into a function
+//     http.onload = () => {
+//         user = http.response;
+//         console.log(http.response);
+//         display_user(http.response);
+//     }
+//     // Execute the call
+//     http.send();
+// }
+
+// JQUERY
 const get_user = (id) => {
-    let http = new XMLHttpRequest();
-    http.responseType = "json";
-    http.open("GET", `http://localhost:5555/api/users/${id}`, true);
-    // Always pass response data into a function
-    http.onload = () => {
-        user = http.response;
-        console.log(http.response);
-        display_user(http.response);
-    }
-    // Execute the call
-    http.send();
+    $.getJSON(`http://localhost:5555/api/users/${id}`)
+        .done((res) => {
+            console.log(res)
+            display_user(res)
+        })
+        .fail((err) => {
+            console.error(err);
+        });
 }
 
 // MOVED TO JQUERY - TOP
