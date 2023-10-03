@@ -1,26 +1,39 @@
-// =============> GET BY ID
+// Initialize JQuery
+$(() => {
+        console.log('Ready!');
+        // Moved from the onloaded() function
+        let data = document.URL.split("?")[1];
+        let id = Number(data.split("=")[1]);
+        get_user(id);
+
+        // JQuery click event for remove()
+        $("#remove").on("click", () => {
+            remove();
+        })
+});
+
+let user = null;
+
 const get_user = (id) => {
     let http = new XMLHttpRequest();
-    
     http.responseType = "json";
-    
     http.open("GET", `http://localhost:5555/api/users/${id}`, true);
-    
     // Always pass response data into a function
     http.onload = () => {
+        user = http.response;
         console.log(http.response);
         display_user(http.response);
     }
-    
     // Execute the call
     http.send();
 }
 
- const loaded = () => {
-    let data = document.URL.split("?")[1];
-    let id = Number(data.split("=")[1]);
-    get_user(id);
- }
+// MOVED TO JQUERY - TOP
+//  const loaded = () => {
+//     let data = document.URL.split("?")[1];
+//     let id = Number(data.split("=")[1]);
+//     get_user(id);
+//  }
 
 
 const display_user = (user) => {
@@ -38,3 +51,14 @@ const display_user = (user) => {
         tbody.innerHTML += tr;  
 }
 
+// USING JQUERY FOR THIS ONE - SEE TOP
+const remove = () => {
+    let http = new XMLHttpRequest();
+    http.responseType = "json";
+    http.open("DELETE", `http://localhost:5555/api/users/${user.id}`, true);
+    http.onload = () => {
+        console.log(http.response);
+    }
+    http.send();
+    document.location = "get-users.html";
+}

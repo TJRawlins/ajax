@@ -9,6 +9,7 @@ const post_user = (user) => {
     }
     
     http.send(JSON.stringify(user));
+    document.location = "get-users.html";
 }
 
 const getDataFromHtml = () => {
