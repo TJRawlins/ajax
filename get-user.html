@@ -2,28 +2,51 @@
 <html lang="en">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/ajax.css">
+    <link rel="stylesheet" href="styles/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="js/get-user.js" defer></script>
     <title>AJAX</title>
 </head>
 <body>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Phone</th>
-                <th>Reviewer?</th>
-                <th>Admin?</th>
-            </tr>
-        </thead>
-        <tbody id="tbody">
-        </tbody>
-    </table>
-    <div>
-        <button id="remove" class="btn btn-primary">Delete</button>
+    <nav id="navbar" class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">PRS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" href="../ajax/get-users.html">Users</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../ajax-vendors/get-vendors.html">Vendors</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <h3>User Details</h3>
+    <div class="wrapper">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Phone</th>
+                    <th>Reviewer?</th>
+                    <th>Admin?</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+        <div>
+            <button id="remove-initial" class="btn btn-danger">Delete</button>
+            <button id="remove" class="btn btn-warning">Confirm?</button>
+        </div>
+        <a href="get-users.html" class="go-back">Go Back?</a>
     </div>
 </body>
 </html>

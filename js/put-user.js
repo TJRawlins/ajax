@@ -1,31 +1,65 @@
+$(() => {
+    console.log('Ready!');
+    let data = document.URL.split("?")[1];
+    let id = Number(data.split("=")[1]);
+    get_user(id);
+});
+
+let user = null;
+
+// const get_user = (id) => {
+//     let http = new XMLHttpRequest();
+//     http.responseType = "json";
+//     http.open("GET", `http://localhost:5555/api/users/${id}`, true);
+//     // Always pass response data into a function
+//     http.onload = () => {
+//         console.log(http.response);
+//         display_user(http.response);
+//     }
+//     // Execute the call
+//     http.send();
+// }
+
+// const put_user = (user) => {
+//     let http = new XMLHttpRequest();
+//     http.responseType = "json";
+//     http.open("PUT", `http://localhost:5555/api/users/${user.id}`, true);
+//     http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+//     http.onload = () => {
+//         console.log(http.response);
+//         document.location = "get-users.html"
+//     }
+    
+//     http.send(JSON.stringify(user));
+// }
+
+// JQUERY
 const get_user = (id) => {
-    let http = new XMLHttpRequest();
-    
-    http.responseType = "json";
-    
-    http.open("GET", `http://localhost:5555/api/users/${id}`, true);
-    
-    // Always pass response data into a function
-    http.onload = () => {
-        console.log(http.response);
-        display_user(http.response);
-    }
-    
-    // Execute the call
-    http.send();
+    $.getJSON(`http://localhost:5555/api/users/${id}`)
+        .done((res) => {
+            user = res;
+            console.log(res)
+            display_user(res)
+        })
+        .fail((err) => {
+            console.error(err);
+        });
 }
 
+// JQUERY
 const put_user = (user) => {
-    let http = new XMLHttpRequest();
-    http.responseType = "json";
-    http.open("PUT", `http://localhost:5555/api/users/${user.id}`, true);
-    http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-    http.onload = () => {
-        console.log(http.response);
-        document.location = "get-users.html"
-    }
-    
-    http.send(JSON.stringify(user));
+    $.ajax({
+        method: "PUT",
+        url: `http://localhost:5555/api/users/${user.id}`,
+        data: JSON.stringify(user),
+        contentType: "application/json"
+    }).done((res) => {
+        console.log(res)
+        document.location = "get-users.html";
+    })
+    .fail((err) => {
+        console.error(err);
+    });
 }
 
 const getDataFromHtml = () => {
@@ -47,11 +81,12 @@ const save = () => {
     put_user(user);
 }
 
-const loaded = () => {
-    let data = document.URL.split("?")[1];
-    let id = Number(data.split("=")[1]);
-    get_user(id)
-}
+// LOADED IN JQUERY INITIALIZER AT THE TOP
+// const loaded = () => {
+//     let data = document.URL.split("?")[1];
+//     let id = Number(data.split("=")[1]);
+//     get_user(id)
+// }
 
 const display_user = (user) => {
     document.getElementById("pid").value = user.id;
@@ -61,6 +96,6 @@ const display_user = (user) => {
     document.getElementById("ppassword").value = user.password;
     document.getElementById("pphone").value = user.phone;
     document.getElementById("pemail").value = user.email;
-    document.getElementById("previewer").checked = user.isReview;
+    document.getElementById("previewer").checked = user.isReviewer;
     document.getElementById("padmin").checked = user.isAdmin;
 }

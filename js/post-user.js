@@ -1,15 +1,32 @@
-const post_user = (user) => {
-    let http = new XMLHttpRequest();
-    http.responseType = "json";
-    http.open("POST", "http://localhost:5555/api/users/", true);
-    http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-    http.onload = () => {
-        console.log(http.response);
-        display_user1(http.response);
-    }
+// const post_user = (user) => {
+//     let http = new XMLHttpRequest();
+//     http.responseType = "json";
+//     http.open("POST", "http://localhost:5555/api/users/", true);
+//     http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+//     http.onload = () => {
+//         console.log(http.response);
+//         display_user1(http.response);
+//     }
     
-    http.send(JSON.stringify(user));
-    document.location = "get-users.html";
+//     http.send(JSON.stringify(user));
+//     document.location = "get-users.html";
+// }
+
+// JQuery
+const post_user = (user) => {
+    $.ajax({
+        method: "POST",
+        url: "http://localhost:5555/api/users/",
+        data: JSON.stringify(user),
+        contentType: "application/json"
+    }).done((res) => {
+        console.log(res)
+        display_user(res)
+        document.location = "get-users.html";
+    })
+    .fail((err) => {
+        console.error(err);
+    });
 }
 
 const getDataFromHtml = () => {
@@ -34,7 +51,7 @@ const save = () => {
 const loaded = () => {
 }
 
-const display_user1 = (user) => {
+const display_user = (user) => {
     document.getElementById("pid").innerText = user.id;
     document.getElementById("pfirstname").value = user.firstname;
     document.getElementById("plastname").value = user.lastname;

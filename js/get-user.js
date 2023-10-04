@@ -33,6 +33,7 @@ let user = null;
 const get_user = (id) => {
     $.getJSON(`http://localhost:5555/api/users/${id}`)
         .done((res) => {
+            user = res;
             console.log(res)
             display_user(res)
         })
@@ -75,3 +76,9 @@ const remove = () => {
     http.send();
     document.location = "get-users.html";
 }
+
+$("#remove").toggleClass("hide")
+$("#remove-initial").on("click", () => {
+    $("#remove").toggleClass("hide")
+    $("#remove-initial").toggleClass("hide")
+})
